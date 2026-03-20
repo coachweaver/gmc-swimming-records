@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GMC Swimming - Team Records</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Montserrat:wght@400;600;700&family=Source+Sans+Pro:ital,wght@0,400;1,400&family=Source+Serif+Pro:wght@400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gmc-navy: #00205B;
+            --gmc-white: #FFFFFF;
+            --gmc-light-blue: #8DC8E8;
+            --trophy-gold: #D4AF37;
+            --champagne-gold: #E6C252;
+            --lane-silver: #C1C6C8;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--gmc-white);
+            color: var(--gmc-navy);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 0;
+        }
+
+        .logo {
+            max-width: 200px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            font-size: 3rem;
+            letter-spacing: 2px;
+            color: var(--gmc-navy);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 1.2rem;
+            color: var(--gmc-navy);
+            font-style: italic;
+        }
+
+        .records-table {
+            background-color: var(--gmc-white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 32, 91, 0.1);
+            border: 2px solid var(--gmc-light-blue);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background-color: var(--gmc-navy);
+        }
+
+        thead th {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--gmc-white);
+            padding: 20px;
+            text-align: left;
+        }
+
+        thead th:nth-child(2) {
+            text-align: center;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid var(--lane-silver);
+        }
+
+        tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #F8F9FA;
+        }
+
+        tbody td {
+            padding: 20px;
+            color: var(--gmc-navy);
+        }
+
+        tbody td:nth-child(2) {
+            text-align: center;
+            background-color: #F0F7FC;
+        }
+
+        .event-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .record-holder {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .athlete-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--gmc-navy);
+        }
+
+        .record-time {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.3rem;
+            color: var(--trophy-gold);
+            font-weight: 700;
+        }
+
+        .record-date {
+            font-family: 'Source Serif Pro', serif;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid var(--lane-silver);
+        }
+
+        .last-updated {
+            font-family: 'Source Serif Pro', serif;
+            font-size: 0.9rem;
+            color: var(--gmc-navy);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .subtitle { font-size: 1rem; }
+            thead th { padding: 15px 10px; font-size: 0.95rem; }
+            tbody td { padding: 15px 10px; }
+            .athlete-name { font-size: 1rem; }
+            .record-time { font-size: 1.1rem; }
+            .event-name { font-size: 1rem; }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 1.5rem; }
+            thead th { font-size: 0.85rem; padding: 12px 8px; }
+            tbody td { padding: 12px 8px; }
+            .athlete-name { font-size: 0.9rem; }
+            .record-time { font-size: 1rem; }
+            .event-name { font-size: 0.95rem; }
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.2rem;
+            color: var(--gmc-navy);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="assets/images/logo.png" alt="GMC Swimming Logo" class="logo" id="logo">
+            <h1>Team Records</h1>
+            <p class="subtitle">GMC Swimming • Blazers Excellence</p>
+        </header>
+
+        <div class="records-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Women's Record</th>
+                        <th>Event</th>
+                        <th>Men's Record</th>
+                    </tr>
+                </thead>
+                <tbody id="records-body">
+                    <tr>
+                        <td colspan="3" class="loading">Loading records...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <footer>
+            <p class="last-updated">Last updated: <span id="last-updated-date">March 20, 2026</span></p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('logo').onerror = function() {
+            this.style.display = 'none';
+        };
+
+        async function loadRecords() {
+            try {
+                const response = await fetch('assets/data/records.json');
+                const records = await response.json();
+                
+                const eventGroups = {};
+                records.forEach(record => {
+                    const eventKey = `${record.distance}-${record.stroke}`;
+                    if (!eventGroups[eventKey]) {
+                        eventGroups[eventKey] = {
+                            distance: record.distance,
+                            stroke: record.stroke,
+                            women: null,
+                            men: null
+                        };
+                    }
+                    if (record.gender === 'Women') {
+                        eventGroups[eventKey].women = record;
+                    } else {
+                        eventGroups[eventKey].men = record;
+                    }
+                });
+
+                const strokeOrder = ['Freestyle', 'Butterfly', 'Backstroke', 'Breaststroke', 'Individual Medley'];
+                const sortedEvents = Object.values(eventGroups).sort((a, b) => {
+                    const distA = parseInt(a.distance);
+                    const distB = parseInt(b.distance);
+                    if (distA !== distB) return distA - distB;
+                    return strokeOrder.indexOf(a.stroke) - strokeOrder.indexOf(b.stroke);
+                });
+
+                const tbody = document.getElementById('records-body');
+                tbody.innerHTML = sortedEvents.map(event => {
+                    const womenCell = event.women ? `
+                        <div class="record-holder">
+                            <div class="athlete-name">${event.women.first_name} ${event.women.last_name}</div>
+                            <div class="record-time">${event.women.time}</div>
+                            <div class="record-date">${event.women.date}</div>
+                        </div>
+                    ` : '<div class="record-holder">—</div>';
+
+                    const menCell = event.men ? `
+                        <div class="record-holder">
+                            <div class="athlete-name">${event.men.first_name} ${event.men.last_name}</div>
+                            <div class="record-time">${event.men.time}</div>
+                            <div class="record-date">${event.men.date}</div>
+                        </div>
+                    ` : '<div class="record-holder">—</div>';
+
+                    return `
+                        <tr>
+                            <td>${womenCell}</td>
+                            <td>
+                                <div class="event-name">${event.distance} ${event.stroke}</div>
+                            </td>
+                            <td>${menCell}</td>
+                        </tr>
+                    `;
+                }).join('');
+
+            } catch (error) {
+                document.getElementById('records-body').innerHTML = `
+                    <tr>
+                        <td colspan="3" style="text-align: center; color: #999;">
+                            Error loading records. Check that records.json exists in assets/data/
+                        </td>
+                    </tr>
+                `;
+                console.error('Error loading records:', error);
+            }
+        }
+
+        loadRecords();
+    </script>
+</body>
+</html>
